@@ -16,6 +16,7 @@
 - Spring이 제공하는 `@Transactinal` 어노테이션과 javax가 제공하는 `@Transactinal` 어노테이션이 있는데 Spring 안에서는 Spring이 제공하는 것을 사용해야 쓸 수 있는 옵션들이 많다
 - `readOnly = true` 옵션을 주면 조회하는 로직에서는 JPA가 좀 더 성능을 최적화 한다
   - 읽기 메서드가 많은 클래스에는 클래스 레벨로 `@Transactinal(readOnly = true)`를 사용하고, 쓰기가 있는 메서드에 따로 `@Transactinal`을 추가해도 된다(메서드에 설정되어 있는게 우선권을 가짐)
+- 테스트 클래스에 설정되어 있으면 롤백이 된다 → 원하지 않을 경우 `@Rollback(false)`를 추가하면 된다
 
 `@AllArgsConstructor`
 - 모든 필드의 생성자를 추가해준다
@@ -72,3 +73,13 @@ public class MemberRepository {
 }
 ```
 이렇게 변경할 수 있다
+
+### test > resources > application.yml
+- 테스트 디렉토리 안에서 우선권을 가짐
+
+### 메모리 DB 사용
+- 별도의 DB(h2와 같은)를 띄우지 않고 Spring이 뜰 때 사용할 수 있는 DB
+- build.gradle에 `com.h2database:h2` 의존성이 있으면 메모리 모드로 JVM 안에서 띄울 수 있다
+- application.yml의 `spring.datasource.url`을 `jdbc:h2:mem:test`로 바꿔주면 된다
+- Spring Boot에서는 `spring.datasource`, `spring.jpa` 설정이 다 없어도 동작한다 → 별도의 설정이 없으면 메모리 모드로 실행하기 때문에
+- Srping Boot는 `sping.jpa.hibernate.ddl-auto: create-drop`이 기본 설정이다
