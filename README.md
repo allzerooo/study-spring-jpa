@@ -24,6 +24,10 @@
 `@RequiredArgsContructor`
 - final 필드만 가지는 생성자를 추가해준다
 
+`CascadeType`
+- `CascadeType.ALL`
+  - private owner인 경우에 사용하면 좋다. 해당 객체를 다른 곳에서 참조하지 않고 private owner와 라이프사이클을 같이할 때
+
 ### 1차 캐시의 key
 ```java
 @Transactional
@@ -83,3 +87,15 @@ public class MemberRepository {
 - application.yml의 `spring.datasource.url`을 `jdbc:h2:mem:test`로 바꿔주면 된다
 - Spring Boot에서는 `spring.datasource`, `spring.jpa` 설정이 다 없어도 동작한다 → 별도의 설정이 없으면 메모리 모드로 실행하기 때문에
 - Srping Boot는 `sping.jpa.hibernate.ddl-auto: create-drop`이 기본 설정이다
+
+### Entity 생성 제한하기
+- JPA는 `protected`까지 기본 생성자를 만들 수 있도록 허용해준다
+- `protected` 기본 생성자를 추가해두면 다른 곳에서 생성 메서드를 사용하지 않고 Entity를 생성하지 못하도록 제한할 수 있다
+- Lombok으로 변경 가능하다 → `@NoArgsConstructor(access = AccessLevel.PROTECTED`
+
+### 도메인 모델 패턴
+- 엔티티가 비즈니스 로직을 가지고 객체 지향의 특성을 적극 활용하는 것
+- 서비스 계층은 단순히 엔티티에 필요한 요청을 위임하는 역할을 한다
+
+### 트랜잭션 스크립트 패턴
+- 엔티티에는 비즈니스 로직이 거의 없고 서비스 계청에서 대부분의 비즈니스 로직을 처리하는 것
