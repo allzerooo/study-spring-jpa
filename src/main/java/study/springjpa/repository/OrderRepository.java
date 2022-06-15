@@ -1,5 +1,6 @@
 package study.springjpa.repository;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,9 @@ public class OrderRepository {
 	public Order findOne(Long id) {
 		return em.find(Order.class, id);
 	}
+//
+//	public List<Order> findAll(OrderSearch orderSearch) {
+//
+//	}
 
 }

@@ -99,3 +99,7 @@ public class MemberRepository {
 
 ### 트랜잭션 스크립트 패턴
 - 엔티티에는 비즈니스 로직이 거의 없고 서비스 계청에서 대부분의 비즈니스 로직을 처리하는 것
+
+### JPA에서 동적 쿼리를 어떻게 해결해야 하는가?
+- JPQL 쿼리를 String으로 조합하거나, Criteria는 실무에서 사용하기 어렵다
+- QueryDsl
