@@ -2,9 +2,12 @@ package study.springjpa.api;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import study.springjpa.domain.Member;
@@ -26,6 +29,13 @@ public class MemberApiController {
 		return new CreateMemberResponse(id);
 	}
 
+	@PutMapping("/api/v1/members/{id}")
+	public UpdateMemberResponse updateMemberV1(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberRequest request) {
+		memberService.update(id, request.getName());
+		Member findMember = memberService.findOne(id);
+		return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+	}
+
 	@Data
 	static class CreateMemberRequest {
 		@NotEmpty
@@ -40,5 +50,18 @@ public class MemberApiController {
 			this.id = id;
 		}
 	}
+
+	@Data
+	static class UpdateMemberRequest {
+		private String name;
+	}
+
+	@Data
+	@AllArgsConstructor
+	static class UpdateMemberResponse {
+		private Long id;
+		private String name;
+	}
+
 
 }
